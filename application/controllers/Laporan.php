@@ -10,6 +10,8 @@ class Laporan extends BaseController {
 
 				$this->load->library('session');
 		    $this->load->model('main_model');
+		    $this->load->model('survey_model');
+		    $this->load->model('users_model');
         $this->load->library('pdfgenerator');
 
 	}
@@ -25,6 +27,35 @@ class Laporan extends BaseController {
 
 		$model = $this->laporan_model->yearList();
 		parent::getView('m_laporan/laporan_tahunan', 'laporan', $model);
+	}
+
+	public function laporanbiodata(){
+		$data = json_decode($this->input->get('data'));
+		$html = $this->load->view('m_laporan/laporan_biodata', ['data' => $data], true);
+		$filename = 'report_'.time();
+		$this->pdfgenerator->generate($html, $filename, true, 'A4', 'portrait');
+	}
+
+	public function laporansurvey(){
+		$data = array();
+		// $user = json_decode($this->input->get('data'));
+		$id_user = $this->input->get('id_user');
+		$data['user'] = $this->users_model->get_user_by_id($id_user);
+		$data['survey'] = $this->survey_model->laporanSurveySaya($id_user);
+		$data['grafik'] = array();
+
+    $surveySaya = $this->survey_model->surveySaya($id_user);
+    if($surveySaya){
+      foreach ($surveySaya as $k => $survey) {
+        $survey->nilai = $this->survey_model->getNilaiPertanyaanBySurvey($survey->id_survey);
+        array_push($data["grafik"], $survey);
+      }
+    }
+
+		$html = $this->load->view('m_laporan/laporan_survey', ['data' => $data]);
+		// $html = $this->load->view('m_laporan/laporan_survey', ['data' => $data], true);
+		// $filename = 'report_'.time();
+		// $this->pdfgenerator->generate($html, $filename, true, 'A4', 'portrait');
 	}
 
 	public function detail_laporan_tahunan(){

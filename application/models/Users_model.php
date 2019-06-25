@@ -79,7 +79,6 @@ class Users_model extends CI_Model {
 		$this->db->from('users');
 		$this->db->where($params);
 		return $this->db->get()->row('username');
-
 	}
 
 	/**
@@ -92,6 +91,12 @@ class Users_model extends CI_Model {
 	public function get_user($email) {
 		$this->db->from('user');
 		$this->db->where('email', $email);
+		return (object) $this->db->get()->row();
+	}
+
+	public function get_user_by_id($id) {
+		$this->db->from('user');
+		$this->db->where('id_user', $id);
 		return (object) $this->db->get()->row();
 	}
 
@@ -153,6 +158,23 @@ class Users_model extends CI_Model {
 	 */
 	private function verify_password_hash($password, $hash) {
 		return password_verify($password, $hash);
+	}
+
+	public function get($page = null){
+    if($page!=null){
+      $this->db->limit('5', $page);
+    } else {
+      if($this->totalUser()>1){
+          $this->db->limit('5');
+      }
+    };
+		$query = $this->db->get('user');
+		return $query->result();
+  }
+
+	public function totalUser() {
+		$this->db->from("user");
+		return floor($this->db->count_all_results()/5)+1;
 	}
 
 }

@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require_once(APPPATH.'controllers/BaseController.php');
+require_once(APPPATH.'controllers/BaseAdminController.php');
 
-class Admin extends BaseController {
+class Admin extends BaseAdminController {
   public function __construct() {
 	parent::__construct();
 		// $this->load->model('user_model');

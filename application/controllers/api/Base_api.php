@@ -6,14 +6,14 @@ class Base_api extends CI_Controller {
   public function __construct() {
     parent::__construct();
     $this->load->helper('url');
-    $this->smtp_user = "djunkir@gmail.com";
-    $this->smtp_pass = "djunkir@321";
+    $this->smtp_user = "idskitaran@gmail.com";
+    $this->smtp_pass = "1muwahh1d";
   }
 
   public function send_email( $email, $subject, $body ){
         $this->load->library('email');
 
-        $config['useragent'] = "JunaEdin";
+        $config['useragent'] = "Skitaran";
         $config['mailpath'] = "/usr/bin/mail"; // or "/usr/sbin/sendmail"
         $config['protocol'] = "smtp";
 
@@ -29,7 +29,7 @@ class Base_api extends CI_Controller {
         $config['smtp_pass'] = $this->smtp_pass;
 
         $this->email->initialize($config);
-        $this->email->from('no-reply@sewa_mobil.com');
+        $this->email->from('no-reply@beres.com');
         $this->email->to($email);
         $this->email->subject($subject);
         $this->email->message( $body );

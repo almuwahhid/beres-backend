@@ -10,18 +10,18 @@
         $this->load->library('session');
         $this->load->helper('url');
 
-        $this->load->model('book_model');
-        $this->book_model->updateBookAfter60();
+        // $this->load->model('book_model');
+        // $this->book_model->updateBookAfter60();
 
 
-        if(isset($_SESSION['logged_in'])){
-          if($_SESSION['logged_in'] !== true){
-            redirect(base_url('login'));
-            // echo "string ".$this->session->userdata('logged_in');
-          }
-        } else {
-          redirect(base_url('login'));
-        }
+        // if(isset($_SESSION['logged_in'])){
+        //   if($_SESSION['logged_in'] !== true){
+        //     redirect(base_url('login'));
+        //     // echo "string ".$this->session->userdata('logged_in');
+        //   }
+        // } else {
+        //   redirect(base_url('login'));
+        // }
     }
 
     public function getView($view, $header = null, $data = array()){
