@@ -91,7 +91,7 @@ class Register extends Base_api {
               </html>
 EMAIL;
 
-    $confirm_data = (object) parent::send_email($data->username, 'Konfirmasi Akun Aplikasi BERES', $message);
+    $confirm_data = (object) parent::send_email($data->username, 'Konfirmasi Akun Aplikasi RIDE', $message);
     if($confirm_data->status=="sukses"){
       $data = array(
                   'status'           => "200",

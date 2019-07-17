@@ -25,14 +25,14 @@
     }
 
     public function getView($view, $header = null, $data = array()){
-        $data_header['username'] = $this->session->userdata('username_admin');
-        $data_header['page'] = $header;
+        // $data_header['username'] = $this->session->userdata('username_admin');
+        // $data_header['page'] = $header;
         // echo "string "+$this->session->userdata('username_admin');
         // echo "string "+$this->session->logged_in;
         // $data['is_admin'] = $this->is_admin();
-        $this->load->view('bodyview/header', $data_header);
+        // $this->load->view('bodyview/header', $data_header);
         $this->load->view($view, ['data' => $data]);
-        $this->load->view('bodyview/footer');
+        // $this->load->view('bodyview/footer');
     }
 
     public function userdata(){

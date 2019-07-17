@@ -41,6 +41,7 @@
                       <th class="border-0">Pertanyaan</th>
                       <th class="border-0">Jawaban</th>
                       <th class="border-0">Nilai/Skor</th>
+                      <th class="border-0">Tugas Intervensi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -59,6 +60,21 @@
                         </td>
                         <td class="centerHorizontal text-center">
                           <?= $datas->nilai_pertanyaan ?>
+                        </td>
+                        <td class="centerHorizontal text-center">
+                          <?php
+                          if($datas->tanggal_submit == "0000-00-00 00:00:00"){
+                            echo "Belum dikerjakan";
+                          } else if($datas->tanggal_submit == "-"){
+                            echo "Tidak ada tugas";
+                          } else {
+                            ?>
+                            <a href='<?= base_url()."survey/taskintervensi/".$datas->id_pertanyaan_survey."?id_user=".$data['id_user']; ?>&id_survey=<?= $data['survey']->id_survey?>&tanggal_survey=<?= explode(" ",$data['survey']->tanggal_survey)[0] ?>'>
+                              <i class="fas fa-search"></i>
+                            </a>
+                            <?php
+                          }
+                           ?>
                         </td>
                       </tr>
                       <?php }?>

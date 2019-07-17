@@ -39,6 +39,22 @@ class Users_model extends CI_Model {
 		return $this->verify_password_hash($password, $hash);
 	}
 
+	public function update_login_by_code($code, $password) {
+		$this->db->where("forgot_code", $code);
+		return $this->db->update("user", ['password' => $this->hash_password($password), 'forgot_code' => ""]);
+	}
+
+	public function update_forgot_password($code, $email) {
+		$this->db->where("email", $email);
+		return $this->db->update("user", ['forgot_code' => $code]);
+	}
+
+	public function get_user_by_code($code) {
+		$this->db->from('user');
+		$this->db->where('forgot_code', $code);
+		return $this->db->get()->row();
+	}
+
 	/**
 	* check_login_admin function.
 	 *
@@ -101,6 +117,7 @@ class Users_model extends CI_Model {
 	}
 
 	public function get_users() {
+		$this->db->order_by('email', 'ASC');
 		$query = $this->db->get('user');
 		return $query->result();
 	}
@@ -125,6 +142,8 @@ class Users_model extends CI_Model {
 		$query = $this->db->get('user');
 		return $query->result();
 	}
+
+
 
 	/**
 	 * check_access function.

@@ -357,6 +357,20 @@ class Survey_model extends CI_Model {
 		return $this->db->get('survey')->result();
 	}
 
+	public function getSubmitDatePertanyaan($id_pertanyaan){
+		$this->db->where('id_pertanyaan_survey', $id_pertanyaan);
+		$this->db->select('*');
+		return $this->db->get('task_pertanyaan')->row();
+	}
+
+	public function getTaskIntervensiByPertanyaan($id_pertanyaan){
+		$this->db->where('task_pertanyaan.id_pertanyaan_survey', $id_pertanyaan);
+		$this->db->select('*');
+		$this->db->join('pertanyaan_survey', 'pertanyaan_survey.id_pertanyaan_survey = task_pertanyaan.id_pertanyaan_survey');
+		$this->db->join('pernyataan', 'pertanyaan_survey.id_pernyataan = pernyataan.id_pernyataan');
+		return $this->db->get('task_pertanyaan')->row();
+	}
+
 	public function checkIntervensiToday($id_user){
 		$this->db->where('id_user', $id_user);
 		$this->db->where('date_format(tanggal_task,"%Y-%m-%d")', "CURDATE()", FALSE);

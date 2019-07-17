@@ -218,6 +218,52 @@ class Survey extends Base_api {
     echo json_encode($result);
   }
 
+  public function updateNewTaskPertanyaan(){
+    $result = array();
+
+    $data = json_decode($this->input->post('data'));
+    $user = json_decode($this->input->post('user'));
+    $data->tanggal_submit = date('Y-m-d H:i:s');
+
+    $jumlahSurvey = $this->survey_model->checkSurvey($user->id_user);
+
+    if($jumlahSurvey == 1){
+      $datak = array(
+                  'id_task_pertanyaan'          => $data->id_task_pertanyaan,
+                  'id_pertanyaan_survey'        => $data->id_pertanyaan_survey,
+                  'tanggal_task'                => $data->tanggal_task,
+                  'status_task'                 => $data->status_task,
+                  'tanggal_submit'              => $data->tanggal_submit,
+                  'komentar_pertanyaan'         => $data->komentar_pertanyaan,
+                  'keterangan'                  => $data->keterangan,
+                  'nilai'                       => '10');
+    } else {
+      $datak = array(
+                  'id_task_pertanyaan'          => $data->id_task_pertanyaan,
+                  'id_pertanyaan_survey'        => $data->id_pertanyaan_survey,
+                  'tanggal_task'                => $data->tanggal_task,
+                  'status_task'                 => $data->status_task,
+                  'tanggal_submit'            => $data->tanggal_submit,
+                  'komentar_pertanyaan'           => $data->komentar_pertanyaan,
+                  'keterangan'                  => $data->keterangan);
+    }
+
+    $insert = $this->main_model->update($datak, 'task_pertanyaan', ['id_task_pertanyaan' => $data->id_task_pertanyaan]);
+    $result["done"] = false;
+    if($insert){
+      $result["result"] = "success";
+      $result["data"] = $this->survey_model->getTaskPertanyaan($data->id_task_pertanyaan);
+      if($this->isSurveyComplete($user->id_user)){
+        $result["done"] = true;
+      }
+    } else {
+      $result["result"] = "failed";
+      $result["data"]  = new stdClass();
+    }
+
+    echo json_encode($result);
+  }
+
   public function getSurveySaya(){
     $result = array();
     $data = json_decode($this->input->post('data'));

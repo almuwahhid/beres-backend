@@ -32,10 +32,32 @@ class Survey extends BaseAdminController {
 	public function pertanyaan($id_survey){
     $data = array();
 		$id_user = $this->input->get('id_user');
-		$data['detail'] = $this->survey_model->getPertanyaanByIdSurvey($id_survey);
 		$data['survey'] = $this->survey_model->getSurveyById($id_survey);
+
+		$pertanyaan = array();
+		foreach ($this->survey_model->getPertanyaanByIdSurvey($id_survey) as $k => $pyt) {
+			if($this->survey_model->getSubmitDatePertanyaan($pyt->id_pertanyaan_survey))
+				$pyt->tanggal_submit = $this->survey_model->getSubmitDatePertanyaan($pyt->id_pertanyaan_survey)->tanggal_submit;
+			else
+				$pyt->tanggal_submit = "-";
+			array_push($pertanyaan, $pyt);
+		}
+
+		$data['detail'] = $pertanyaan;
     $data['id_user'] = $id_user;
 		parent::getView('m_survey/detail_survey', 'survey', $data);
+	}
+
+	public function taskintervensi($id_pertanyaan){
+    $data = array();
+		$id_user = $this->input->get('id_user');
+		$tanggal_survey = $this->input->get('tanggal_survey');
+		$id_survey = $this->input->get('id_survey');
+		$data['detail'] = $this->survey_model->getTaskIntervensiByPertanyaan($id_pertanyaan);
+    $data['id_user'] = $id_user;
+    $data['id_survey'] = $id_survey;
+    $data['tanggal_survey'] = $tanggal_survey;
+		parent::getView('m_survey/detail_intervensi', 'survey', $data);
 	}
 
 	public function konfirmasi(){

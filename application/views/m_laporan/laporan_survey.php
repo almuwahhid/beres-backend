@@ -1,3 +1,23 @@
+<?php
+function tanggal($tanggal){
+  $bulan = array (
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $pecahkan = explode('-', $tanggal);
+  return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -303,7 +323,8 @@
  	 </div>
    <br/><br/><br/><br/>
    <div style="width:700px;text-align:right;;margin-top:20px">
-     BeRes Application, <?= strftime('%d %B %Y') ?>
+     <!-- RIDE Application, <?= strftime('%d %B %Y') ?> -->
+     RIDE Application, <?= tanggal(date('Y-m-d')) ?>
      <br><br><br><br>
      Aulia Diah Pratiwi, S. Pd. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    </div>

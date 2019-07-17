@@ -53,6 +53,7 @@ $route['default_controller'] = 'admin';
 $route['login'] = "login/index";
 $route["survey/detail/(:any)"] = "survey/detail/$1";
 $route["survey/pertanyaan/(:any)"] = "survey/pertanyaan/$1";
+$route["survey/taskintervensi/(:any)"] = "survey/taskintervensi/$1";
 // $route["modelkendaraan/detail/(:any)"] = "modelkendaraan/detail/$1";
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
